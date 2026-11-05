@@ -1,4 +1,16 @@
-const API_BASE_URL = '/ordonez/students'
+function getApiBaseUrl() {
+  const envUrl = import.meta.env.VITE_API_BASE_URL
+  if (envUrl && envUrl.trim()) {
+    let clean = envUrl.trim().replace(/\/+$/, '')
+    if (!/^https?:\/\//i.test(clean)) {
+      clean = `https://${clean}`
+    }
+    return `${clean}/ordonez/students`
+  }
+  return '/ordonez/students'
+}
+
+const API_BASE_URL = getApiBaseUrl()
 
 async function handleResponse(response) {
   if (!response.ok) {
